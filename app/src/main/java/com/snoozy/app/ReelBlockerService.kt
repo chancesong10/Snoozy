@@ -52,6 +52,8 @@ class ReelBlockerService : AccessibilityService() {
         private const val FROM_DM_WINDOW_MS = 2500L
         // Ignore scroll events while the chat's Reel is still opening.
         private const val PASS_SETTLE_MS = 800L
+        // Longest wait between looks at the clock for a schedule starting.
+        private const val SCHEDULE_WATCH_MS = 60_000L
     }
 
     private class Target(
@@ -126,6 +128,23 @@ class ReelBlockerService : AccessibilityService() {
             if (modal == null) return
             if (anotherAppTakingOver()) hideModal() else handler.postDelayed(this, LEAVE_WATCH_MS)
         }
+    }
+
+    // A schedule can start while a Reel is already playing, with no event to
+    // notice it by. Look again when the next one is due. Handler time stops
+    // while the phone sleeps, so never wait more than SCHEDULE_WATCH_MS.
+    private val scheduleWatch = object : Runnable {
+        override fun run() {
+            val service = this@ReelBlockerService
+            if (BlockState.isBlocking(service)) scheduleCheck(0L)
+            val wait = Schedules.nextStart(service)?.let { it - System.currentTimeMillis() } ?: SCHEDULE_WATCH_MS
+            handler.postDelayed(this, wait.coerceIn(1L, SCHEDULE_WATCH_MS))
+        }
+    }
+
+    override fun onServiceConnected() {
+        super.onServiceConnected()
+        handler.post(scheduleWatch)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -361,6 +380,7 @@ class ReelBlockerService : AccessibilityService() {
 
     override fun onDestroy() {
         handler.removeCallbacks(checkRunnable)
+        handler.removeCallbacks(scheduleWatch)
         hideModal()
         muteMusic(false)
         super.onDestroy()

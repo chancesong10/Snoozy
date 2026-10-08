@@ -19,6 +19,7 @@ The code is open source so anyone can see exactly what the app does. You don't n
 - **Blocks only the scroll.** Opening the Reels or Shorts player sends you back to the screen you opened it from, with a small "Reels are snoozing" note. Everything else in the app works as usual.
 - **Mutes the Reel** for the moment before it closes, so nothing blares.
 - **Snooze timer.** Pick a minimum snooze, from 15 minutes up to 24 hours, and Snoozy won't let you turn it off early. You can set your own timer options in hours and minutes.
+- **Schedules.** Have Snoozy start snoozing on its own, like every night at 11 PM for 8 hours, on the days you pick. A running schedule is locked like any other snooze.
 - **Reels in Chats.** When a Reel is sent in one of your Instagram chats, one-on-one or group, you can watch that one Reel. Swiping to more stays blocked. Choose which chats are allowed, or allow or block them all at once.
 
 ## Privacy

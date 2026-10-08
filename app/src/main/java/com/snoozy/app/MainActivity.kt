@@ -66,6 +66,9 @@ class MainActivity : Activity() {
         findViewById<View>(R.id.openOptions).setOnClickListener {
             startActivity(Intent(this, SnoozeOptionsActivity::class.java))
         }
+        findViewById<View>(R.id.openSchedules).setOnClickListener {
+            startActivity(Intent(this, SchedulesActivity::class.java))
+        }
     }
 
     private fun label(minutes: Int) = if (minutes == 0) "None" else SnoozeOptions.label(minutes)
@@ -192,11 +195,20 @@ class MainActivity : Activity() {
         toggle.setTextColor(getColor(if (locked) R.color.ink_soft else R.color.card))
 
         findViewById<TextView>(R.id.hint).text = when {
+            locked && BlockState.lockedBySchedule(this) -> "Your schedule started this snooze. Sweet dreams!"
             locked -> "You picked this lock. Hang in there!"
             blocking -> "Your lock is over. You can wake them up any time."
             selectedMinutes == 0 -> "No lock: you can wake them up any time."
             else -> "Once started, you can't stop early."
         }
+
+        findViewById<TextView>(R.id.schedulesSummary).text = schedulesSummary()
+    }
+
+    private fun schedulesSummary(): String {
+        Schedules.active(this)?.let { return "Snoozing until ${Schedules.whenLabel(this, it.end)}" }
+        val next = Schedules.nextStart(this) ?: return "Snooze automatically at set times"
+        return "Next: ${Schedules.whenLabel(this, next)}"
     }
 
     private fun formatDuration(ms: Long): String {

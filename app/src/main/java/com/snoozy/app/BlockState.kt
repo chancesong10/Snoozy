@@ -3,7 +3,8 @@ package com.snoozy.app
 import android.content.Context
 
 // Whether blocking is on, and the earliest time it may be turned off.
-// Shared by MainActivity (writes) and ReelBlockerService (reads).
+// Shared by MainActivity (writes) and ReelBlockerService (reads). A running
+// schedule (see Schedules) counts as blocking and locked on top of this.
 object BlockState {
 
     private const val PREFS = "block_state"
@@ -16,16 +17,25 @@ object BlockState {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
     fun isBlocking(context: Context): Boolean =
-        prefs(context).getBoolean(KEY_BLOCKING, true)
+        prefs(context).getBoolean(KEY_BLOCKING, true) || Schedules.active(context) != null
 
     fun lockRemainingMs(context: Context): Long {
-        val until = prefs(context).getLong(KEY_LOCK_UNTIL, 0L)
+        val until = maxOf(prefs(context).getLong(KEY_LOCK_UNTIL, 0L), Schedules.active(context)?.end ?: 0L)
         return (until - System.currentTimeMillis()).coerceAtLeast(0L)
     }
 
+    // Whether the lock now running comes from a schedule, not a manual snooze.
+    fun lockedBySchedule(context: Context): Boolean {
+        val window = Schedules.active(context) ?: return false
+        return window.end >= prefs(context).getLong(KEY_LOCK_UNTIL, 0L)
+    }
+
     // Length of the current lock, for drawing how much of it is left.
-    fun lockTotalMs(context: Context): Long =
-        prefs(context).getLong(KEY_LOCK_TOTAL, 0L)
+    fun lockTotalMs(context: Context): Long {
+        val window = Schedules.active(context)
+        if (window != null && lockedBySchedule(context)) return window.end - window.start
+        return prefs(context).getLong(KEY_LOCK_TOTAL, 0L)
+    }
 
     // The lock length picked last time, pre-selected next time.
     fun lastChoiceMs(context: Context, default: Long): Long =
