@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
@@ -14,7 +15,8 @@ class FriendsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
-        findViewById<TextView>(R.id.pageTitle).text = "💌  Reels in Chats"
+        findViewById<TextView>(R.id.pageTitle).text = "Reels in Chats"
+        findViewById<ImageView>(R.id.pageIcon).setImageResource(R.drawable.ic_chat_reel)
         findViewById<View>(R.id.backButton).setOnClickListener { finish() }
 
         findViewById<View>(R.id.allowAll).setOnClickListener {

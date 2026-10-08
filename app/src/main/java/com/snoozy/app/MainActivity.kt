@@ -69,6 +69,24 @@ class MainActivity : Activity() {
         findViewById<View>(R.id.openSchedules).setOnClickListener {
             startActivity(Intent(this, SchedulesActivity::class.java))
         }
+        findViewById<View>(R.id.openLicenses).setOnClickListener { showLicenses() }
+    }
+
+    // The icons' license asks for its notice to ship with the app.
+    private fun showLicenses() {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_licenses, null)
+        val dialog = Dialog(this)
+        dialog.setContentView(view)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        // The file is hard-wrapped at 72 columns; let paragraphs fill the width.
+        val text = resources.openRawResource(R.raw.lucide_license).bufferedReader().use { it.readText() }
+        view.findViewById<TextView>(R.id.licenseText).text =
+            text.replace("\r\n", "\n").replace(Regex("(?<=\\S)\n(?=\\S)"), " ").trim()
+
+        view.findViewById<View>(R.id.licensesClose).setOnClickListener { dialog.dismiss() }
+        dialog.show()
     }
 
     private fun label(minutes: Int) = if (minutes == 0) "None" else SnoozeOptions.label(minutes)
@@ -155,7 +173,8 @@ class MainActivity : Activity() {
         if (!serviceOn) return
 
         val pill = findViewById<TextView>(R.id.statusPill)
-        pill.text = if (blocking) "😴  Reels & Shorts are snoozing" else "☀️  Reels & Shorts are awake"
+        pill.text = if (blocking) "Reels & Shorts are snoozing" else "Reels & Shorts are awake"
+        pill.setCompoundDrawablesRelativeWithIntrinsicBounds(if (blocking) R.drawable.ic_moon else R.drawable.ic_sun, 0, 0, 0)
         pill.setBackgroundResource(if (blocking) R.drawable.bg_pill_mint else R.drawable.bg_pill_coral)
 
         val big = findViewById<TextView>(R.id.ringBig)
@@ -187,7 +206,7 @@ class MainActivity : Activity() {
 
         val toggle = findViewById<TextView>(R.id.toggleButton)
         toggle.text = when {
-            locked -> "🔒  Locked"
+            locked -> "Locked"
             blocking -> "Wake up"
             else -> "Start snoozing"
         }

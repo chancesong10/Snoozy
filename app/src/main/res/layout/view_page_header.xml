@@ -19,11 +19,20 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
+    <!-- Set by each page. -->
+    <ImageView
+        android:id="@+id/pageIcon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@null"
+        android:tint="@color/coral" />
+
     <TextView
         android:id="@+id/pageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="10dp"
         android:textSize="26sp"
         android:textStyle="bold" />
 </LinearLayout>

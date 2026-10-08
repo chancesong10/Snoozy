@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
@@ -18,7 +19,8 @@ class SnoozeOptionsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_snooze_options)
-        findViewById<TextView>(R.id.pageTitle).text = "⏱  Snooze options"
+        findViewById<TextView>(R.id.pageTitle).text = "Snooze options"
+        findViewById<ImageView>(R.id.pageIcon).setImageResource(R.drawable.ic_timer)
         findViewById<View>(R.id.backButton).setOnClickListener { finish() }
         findViewById<TextView>(R.id.optionsIntro).text =
             "Choose the lock lengths shown on the home screen. Up to ${SnoozeOptions.MAX_OPTIONS}, " +

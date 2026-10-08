@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Moon and star, for "snoozing". Adapted from Lucide (lucide.dev), ISC License. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M12,3a6,6 0 0,0 9,9a9,9 0 1,1 -9,-9Z M20,3v4 M22,5h-4"
+        android:strokeWidth="2"
+        android:strokeColor="@color/ink"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

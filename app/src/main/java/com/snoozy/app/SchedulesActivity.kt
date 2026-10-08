@@ -12,6 +12,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.Switch
@@ -35,7 +36,8 @@ class SchedulesActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedules)
-        findViewById<TextView>(R.id.pageTitle).text = "🌙  Schedules"
+        findViewById<TextView>(R.id.pageTitle).text = "Schedules"
+        findViewById<ImageView>(R.id.pageIcon).setImageResource(R.drawable.ic_schedule)
         findViewById<View>(R.id.backButton).setOnClickListener { finish() }
         findViewById<TextView>(R.id.schedulesIntro).text =
             "Snoozy starts snoozing on its own at these times and keeps Reels & Shorts " +
@@ -65,7 +67,7 @@ class SchedulesActivity : Activity() {
             row.findViewById<TextView>(R.id.scheduleTime).text =
                 "${Schedules.timeLabel(this, s.start)} – ${Schedules.timeLabel(this, s.end)}"
             row.findViewById<TextView>(R.id.scheduleDetail).text =
-                if (running) "😴  Snoozing now, locked until ${Schedules.timeLabel(this, s.end)}"
+                if (running) "Snoozing now, locked until ${Schedules.timeLabel(this, s.end)}"
                 else "${Schedules.daysLabel(s.days)} · ${SnoozeOptions.label(s.minutes)}"
 
             val switch = row.findViewById<Switch>(R.id.scheduleSwitch)

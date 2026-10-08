@@ -24,7 +24,6 @@ object Schedules {
 
     private const val PREFS = "schedules"
     private const val KEY = "list"
-    private const val MINUTE = 60_000L
 
     // start: minutes after midnight. days: one bit per day the snooze starts
     // on, bit (Calendar.DAY_OF_WEEK - 1), so Sunday is bit 0.
@@ -119,10 +118,21 @@ object Schedules {
     fun window(s: Schedule, now: Long = System.currentTimeMillis()): Window? {
         for (daysAgo in 0..1) {
             val start = startOn(s, now, -daysAgo) ?: continue
-            val end = start + s.minutes * MINUTE
+            val end = endOf(s, start)
             if (now in start until end) return Window(start, end)
         }
         return null
+    }
+
+    // When the run starting at `start` ends, by the clock on the wall: 11 PM
+    // for 8h ends at 7 AM even on the night the clocks change, so that night's
+    // run is an hour shorter or longer.
+    private fun endOf(s: Schedule, start: Long): Long = Calendar.getInstance().run {
+        timeInMillis = start
+        add(Calendar.DAY_OF_YEAR, (s.start + s.minutes) / (24 * 60))
+        set(Calendar.HOUR_OF_DAY, s.end / 60)
+        set(Calendar.MINUTE, s.end % 60)
+        timeInMillis
     }
 
     // The running schedule that ends last, if any.

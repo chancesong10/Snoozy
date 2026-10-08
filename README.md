@@ -31,6 +31,10 @@ The code is open source so anyone can see exactly what the app does. You don't n
 
 Full details: [Privacy Policy](https://snoozyapp.github.io/privacy.html) · [Terms of Service](https://snoozyapp.github.io/terms.html) · [Website](https://snoozyapp.github.io)
 
+## Credits
+
+Icons are adapted from [Lucide](https://lucide.dev) (ISC License); some Lucide icons derive from [Feather](https://feathericons.com) (MIT License). The full notices are in the app under "Open-source licenses" and in [`app/src/main/res/raw/lucide_license.txt`](app/src/main/res/raw/lucide_license.txt).
+
 ## Requirements
 
 Android 8.0 or newer.
