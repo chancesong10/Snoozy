@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Google Play's prominent disclosure for the AccessibilityService API.
+     It must be shown before sending the user to Accessibility settings and
+     needs two clear buttons. Closing it any other way counts as declining. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="28dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="@string/consent_title"
+            android:textColor="@color/ink"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- Scrolls on small screens so the buttons stay reachable. -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/consent_body"
+                android:textColor="@color/ink_soft"
+                android:textSize="15sp" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/consentAgree"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="@string/consent_agree"
+            android:textColor="@color/card"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/consentDecline"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_soft"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="@string/consent_decline"
+            android:textColor="@color/ink"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

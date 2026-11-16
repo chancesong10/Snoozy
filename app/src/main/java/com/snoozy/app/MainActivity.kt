@@ -42,9 +42,7 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
         ring = findViewById(R.id.ring)
 
-        findViewById<View>(R.id.setupButton).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-        }
+        findViewById<View>(R.id.setupButton).setOnClickListener { showAccessibilityConsent() }
 
         selectedMinutes = (BlockState.lastChoiceMs(this, 60 * MINUTE) / MINUTE).toInt()
 
@@ -70,6 +68,25 @@ class MainActivity : Activity() {
             startActivity(Intent(this, SchedulesActivity::class.java))
         }
         findViewById<View>(R.id.openLicenses).setOnClickListener { showLicenses() }
+    }
+
+    // Google Play's prominent disclosure: explain the AccessibilityService use
+    // and get an explicit yes before sending the user to settings. Only
+    // "Agree" continues; Back closes it, which counts as declining.
+    private fun showAccessibilityConsent() {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_accessibility_consent, null)
+        val dialog = Dialog(this)
+        dialog.setContentView(view)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        view.findViewById<View>(R.id.consentAgree).setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        }
+        view.findViewById<View>(R.id.consentDecline).setOnClickListener { dialog.dismiss() }
+        dialog.show()
     }
 
     // The icons' license asks for its notice to ship with the app.

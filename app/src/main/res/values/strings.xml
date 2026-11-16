@@ -2,5 +2,11 @@
     <string name="app_name">Snoozy</string>
     <string name="accessibility_description">Only watches Instagram and YouTube, to detect when Reels or Shorts are opened and send you back out of them. When a Reel is opened from a DM, it reads the chat name so Reels sent in chats you allow can play. Other apps’ screens are never read (only which app is in front), no messages are read, and the app has no internet access, so nothing ever leaves your phone.</string>
     <string name="snooze_modal_message">You asked Snoozy to keep them asleep, so you’ve been sent back.</string>
-    <string name="setup_explainer">Android will warn that this app gets \"full control\". It shows that warning for every accessibility app. Snoozy only looks at Instagram and YouTube. It reads the name of a DM chat only so Reels sent in your chats can play. It has no internet access, so nothing can leave your phone.</string>
+    <string name="setup_explainer">Snoozy needs Android’s Accessibility permission to spot Reels and Shorts. Before you decide, we’ll show you exactly what it can see.</string>
+
+    <!-- Prominent disclosure, shown before opening Accessibility settings. -->
+    <string name="consent_title">Allow Snoozy to use Accessibility?</string>
+    <string name="consent_body"><b>Snoozy uses Android’s AccessibilityService API</b> to block Reels and Shorts. It can’t work without it.\n\n<b>What it sees:</b> only the Instagram and YouTube apps. It checks what’s on screen in those apps to tell when Reels or Shorts open. When a Reel is opened from an Instagram DM, it reads that chat’s name so Reels from chats you allow can play.\n\n<b>What it does:</b> while snoozing, it closes Reels and Shorts by going back, mutes their sound, and shows a short message.\n\n<b>What it never does:</b> it doesn’t read other apps, your messages or anything you type. Chat names are stored only on your phone. Snoozy has no internet access, so no data is collected, shared or sold.\n\nAndroid will warn that Snoozy gets “full control”. It shows that warning for every accessibility app. You can turn Snoozy off at any time in Settings &gt; Accessibility.</string>
+    <string name="consent_agree">Agree &amp; continue</string>
+    <string name="consent_decline">No thanks</string>
 </resources>
